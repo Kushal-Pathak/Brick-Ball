@@ -7,7 +7,7 @@
 using namespace std;
 
 struct hitter {
-	int len = 13;
+	int len = 6;
 	int pos = w / 2 - len / 2;
 };
 struct pong {
@@ -46,7 +46,7 @@ int main() {
 			update_ball();
 			control();
 			if (win_condition() == 1) break;
-			//Sleep(10);
+			Sleep(10);
 		}
 		if(game_over) game_over_message();
 	}
@@ -60,7 +60,6 @@ void init_buffer() {
 				buffer[i][j] = brick;
 				max_score++;
 			}
-			
 			else buffer[i][j] = ' ';
 			if (i == 0)buffer[i][j] = 'X';
 			if (j == 0 || j == w - 1)buffer[i][j] = 'X';
@@ -73,7 +72,7 @@ int win_condition() {
 	if (score == max_score) {
 		render();
 		cout <<endl<< "\t  You Win!" << endl;
-		cout << "      Play Again (y)? ";
+		cout << "\tPlay Again (y)? ";
 		cin >> play;
 		return 1;
 	}
@@ -81,8 +80,8 @@ int win_condition() {
 }
 
 void game_over_message() {
-	cout << "\n\t Game Over!" << endl;
-	cout << "\t Play Again (y)? ";
+	cout << "\n\t  Game Over!" << endl;
+	cout << "\tPlay Again (y)? ";
 	cin >> play;
 }
 void home_screen() {
