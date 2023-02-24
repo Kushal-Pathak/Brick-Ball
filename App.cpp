@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <cmath>
-#define h 20
+#define h 25
 #define w 15
 using namespace std;
 
@@ -133,7 +133,10 @@ void detect_collision() {
 	}
 	//player collision
 	for (int i = player.pos; i < player.pos + player.len; i++) {
-		if (ball.y == h - 4 && ball.x == i) ball.vy = -ball.vy;
+		if (ball.y == h - 3 && ball.x == i) {
+			ball.vy = -ball.vy;
+			break;
+		}
 	}
 	//wall collision
 	if (ball.x >= w - 2 || ball.x <= 1) {
@@ -143,21 +146,21 @@ void detect_collision() {
 		ball.vy = -ball.vy;
 	}
 
-	int flag = 0;
+	int flag1 = 0, flag2 = 0;
 	//brick collision
 	if (buffer[ball.y + ball.vy][ball.x] == brick) {
 		buffer[ball.y + ball.vy][ball.x] = ' ';
 		ball.vy = -ball.vy;
-		flag = 1;
+		flag1 = 1;
 		score++;
 	}
-	 if (buffer[ball.y][ball.x + ball.vx] == brick && !flag) {
+	 if (buffer[ball.y][ball.x + ball.vx] == brick) {
 		buffer[ball.y][ball.x + ball.vx] = ' ';
 		ball.vx = -ball.vx;
 		score++;
-		flag = 1;
+		flag2 = 1;
 	}
-	 if (buffer[ball.y + ball.vy][ball.x + ball.vx] == brick && !flag) {
+	 if (buffer[ball.y + ball.vy][ball.x + ball.vx] == brick && !flag1 && !flag2) {
 		 buffer[ball.y + ball.vy][ball.x + ball.vx] = ' ';
 		 ball.vx = -ball.vx;
 		 ball.vy = -ball.vy;
@@ -189,7 +192,7 @@ void update_ball() {
 
 void bind_objects() {
 	for (int i = player.pos; i <= player.pos + player.len - 1; i++) {
-		buffer[h - 2][i] = brick;
+		buffer[h - 2][i] = '#';
 	}
 	if (ball.x > 0 && ball.x < w - 1 && ball.y>0) {
 		buffer[ball.y][ball.x] = ball.ball;
